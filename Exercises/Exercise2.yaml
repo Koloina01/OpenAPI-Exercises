@@ -1,9 +1,42 @@
 openapi: 3.1.0
 info:
-  title: Title
-  description: Title
+  title: Parameter manipulation
+  description: Parameter manipulation
   version: 1.0.0
 servers:
-  - url: 'https'
+  - url: http://localhost:8000
 paths:
+  /users:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+                example:
+                  - id: 1
+                    name: Alice
+                    email: alice@example.com
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "name required"
   
