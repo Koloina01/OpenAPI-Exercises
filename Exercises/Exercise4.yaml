@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: Recherche de produits
+  description: Recherche de produits
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /products:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/qParam'
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products'
+                examples:
+                  multipleProducts:
+                    value:
+                      - name: "Pizza Margherita"
+                        expiration_datetime: "2025-12-31T23:59:59Z"
+                        price: 12.5
+                      - name: "Mango Juice"
+                        expiration_datetime: "2025-09-15T12:00:00Z"
+                        price: 3.8
+                  emptyList:
+                    value: []
+
+components:
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+    qParam:
+      name: q
+      in: query
+      schema:
+        type: string
+  schemas:
+    Products:
+      type: object
+      properties:
+        name:
+          type: string
+        expiration_date_time:
+          type: string
+          format: date-time
+        price:
+          type: number
+          format: double
